@@ -73,10 +73,10 @@ export default function ChatLayout({ me, socket }){
 
   return (<div className="h-screen grid grid-cols-[340px_1fr] dark:text-white">
     <aside className="border-r border-black/5 dark:border-white/10 bg-gradient-to-b from-white to-emerald-50 dark:from-night dark:to-night relative">
-      <div className="absolute inset-x-0 -top-16 h-40 bg-brand blur-3xl opacity-20 pointer-events-none"></div>
+      <div className="absolute inset-x-0 -top-16 h-40 bg-sky-400 blur-3xl opacity-20 pointer-events-none"></div>
       <div className="p-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-white/50 dark:bg-white/5 backdrop-blur">
         <div className="flex items-center gap-3">
-          <div className="w-5 h-5 rounded-full bg-brand shadow-glow"></div>
+          <div className="w-5 h-5 rounded-full bg-sky-400 shadow-glow"></div>
           <div>
             <div className="text-lg font-bold">Couple chat</div>
             <div className="text-xs text-gray-500">Hi, {me.username}</div>
@@ -93,7 +93,7 @@ export default function ChatLayout({ me, socket }){
         <div className="flex gap-2">
           {users.filter(u=>u._id!==me._id).map(u=>(
             <button key={u._id} onClick={()=>startChat(u._id)} className="flex flex-col items-center gap-1 group">
-              <div className="p-[2px] rounded-full bg-brand/60 shadow-glow group-hover:scale-105 transition">
+              <div className="p-[2px] rounded-full bg-sky-400  group-hover:scale-105 transition">
                 <div className="bg-white dark:bg-night rounded-full p-1"><Avatar name={u.username} size={56}/></div>
               </div>
               <div className="text-xs w-16 truncate">{u.username}</div>
@@ -149,7 +149,7 @@ export default function ChatLayout({ me, socket }){
         {messages.map(m=>(
           <div key={m._id} className={`group relative flex ${m.senderId===me._id?"justify-end":"justify-start"}`}>
             <div className={`px-4 py-2 rounded-3xl shadow-soft max-w-[75%] ${m.senderId===me._id
-              ?"bg-brand/90 text-black border border-brand/60 shadow-glow"
+              ?"bg-sky-400/90 text-black border border-sky-400/60 shadow-glow"
               :"bg-white/90 dark:bg-white/10 border border-black/5 dark:border-white/10"}`}>
               <div className="text-sm whitespace-pre-wrap break-words">{m.text}</div>
               <div className="text-[10px] opacity-70 mt-1">{dayjs(m.createdAt||Date.now()).format("HH:mm")}</div>
@@ -169,7 +169,7 @@ export default function ChatLayout({ me, socket }){
 
       <div className="p-3 border-t border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur flex gap-2">
         <input value={text} onChange={e=>{setText(e.target.value); if(active) socket.emit("typing",{roomId:active._id,isTyping:!!e.target.value});}} placeholder="Message…" className="flex-1 border rounded-2xl px-4 py-3 bg-white/80 dark:bg-white/10 dark:border-white/10" onKeyDown={e=>{ if(e.key==="Enter") { socket.emit("typing",{roomId:active._id,isTyping:false}); send(); } }} />
-        <button onClick={()=>{ socket.emit("typing",{roomId:active._id,isTyping:false}); send(); }} className="px-4 rounded-2xl bg-brand hover:bg-brand/90 text-black shadow-glow flex items-center gap-2"><IoSend/> Send</button>
+        <button onClick={()=>{ socket.emit("typing",{roomId:active._id,isTyping:false}); send(); }} className="px-4 rounded-2xl bg-sky-400 hover:bg-sky-400/60 text-black shadow-glow flex items-center gap-2"><IoSend/> Send</button>
       </div>
     </main>
   </div>);
